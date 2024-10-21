@@ -1,0 +1,6 @@
+[
+    { "model": "grandpaapi.workoutcategory", "pk": 1, "fields": { "workout_id": 1, "category_id": 2 } },
+    { "model": "grandpaapi.workoutcategory", "pk": 2, "fields": { "workout_id": 2, "category_id": 4 } },
+    { "model": "grandpaapi.workoutcategory", "pk": 3, "fields": { "workout_id": 3, "category_id": 8 } }
+  ]
+  

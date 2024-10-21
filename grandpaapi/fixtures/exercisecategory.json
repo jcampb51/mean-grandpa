@@ -1,0 +1,22 @@
+[
+    { "model": "grandpaapi.exercisecategory", "pk": 1, "fields": { "exercise_id": 1, "category_id": 1 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 2, "fields": { "exercise_id": 2, "category_id": 1 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 3, "fields": { "exercise_id": 3, "category_id": 1 } },
+    
+    { "model": "grandpaapi.exercisecategory", "pk": 4, "fields": { "exercise_id": 4, "category_id": 2 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 5, "fields": { "exercise_id": 5, "category_id": 2 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 6, "fields": { "exercise_id": 6, "category_id": 2 } },
+    
+    { "model": "grandpaapi.exercisecategory", "pk": 7, "fields": { "exercise_id": 7, "category_id": 3 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 8, "fields": { "exercise_id": 8, "category_id": 3 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 9, "fields": { "exercise_id": 9, "category_id": 3 } },
+    
+    { "model": "grandpaapi.exercisecategory", "pk": 10, "fields": { "exercise_id": 10, "category_id": 4 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 11, "fields": { "exercise_id": 11, "category_id": 4 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 12, "fields": { "exercise_id": 12, "category_id": 4 } },
+    
+    { "model": "grandpaapi.exercisecategory", "pk": 13, "fields": { "exercise_id": 13, "category_id": 8 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 14, "fields": { "exercise_id": 14, "category_id": 8 } },
+    { "model": "grandpaapi.exercisecategory", "pk": 15, "fields": { "exercise_id": 15, "category_id": 8 } }
+  ]
+  

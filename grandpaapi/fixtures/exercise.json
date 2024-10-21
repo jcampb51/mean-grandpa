@@ -1,0 +1,138 @@
+[
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 1,
+      "fields": {
+        "name": "Running",
+        "description": "Running at a steady pace",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 2,
+      "fields": {
+        "name": "Cycling",
+        "description": "Stationary or outdoor cycling",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 3,
+      "fields": {
+        "name": "Jump Rope",
+        "description": "Jump rope for cardio",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 4,
+      "fields": {
+        "name": "Push Ups",
+        "description": "Upper body strength exercise",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 5,
+      "fields": {
+        "name": "Pull Ups",
+        "description": "Upper body strength with bar",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 6,
+      "fields": {
+        "name": "Bench Press",
+        "description": "Chest and arm workout",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 7,
+      "fields": {
+        "name": "Squats",
+        "description": "Legs strength exercise",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 8,
+      "fields": {
+        "name": "Lunges",
+        "description": "Leg strength and stability exercise",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 9,
+      "fields": {
+        "name": "Deadlifts",
+        "description": "Leg and lower back exercise",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 10,
+      "fields": {
+        "name": "Bicep Curls",
+        "description": "Arm muscle strengthening",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 11,
+      "fields": {
+        "name": "Tricep Dips",
+        "description": "Triceps exercise using body weight",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 12,
+      "fields": {
+        "name": "Hammer Curls",
+        "description": "Arm muscle exercise with dumbbells",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 13,
+      "fields": {
+        "name": "Crunches",
+        "description": "Abdominal muscle workout",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 14,
+      "fields": {
+        "name": "Planks",
+        "description": "Core strength workout",
+        "video_link": "https://example.com"
+      }
+    },
+    {
+      "model": "grandpaapi.exercise",
+      "pk": 15,
+      "fields": {
+        "name": "Leg Raises",
+        "description": "Lower abdominal exercise",
+        "video_link": "https://example.com"
+      }
+    }
+  ]
+  

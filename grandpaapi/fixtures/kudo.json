@@ -1,0 +1,11 @@
+[
+    { "model": "grandpaapi.kudo", "pk": 1, "fields": { "label": "Great Job", "img": "💪" } },
+    { "model": "grandpaapi.kudo", "pk": 2, "fields": { "label": "Keep Going", "img": "🏃‍♂️" } },
+    { "model": "grandpaapi.kudo", "pk": 3, "fields": { "label": "You Did It!", "img": "🎉" } },
+    { "model": "grandpaapi.kudo", "pk": 4, "fields": { "label": "Amazing", "img": "👏" } },
+    { "model": "grandpaapi.kudo", "pk": 5, "fields": { "label": "Crushed It", "img": "🔥" } },
+    { "model": "grandpaapi.kudo", "pk": 6, "fields": { "label": "Champion", "img": "🏅" } },
+    { "model": "grandpaapi.kudo", "pk": 7, "fields": { "label": "Well Done", "img": "👍" } },
+    { "model": "grandpaapi.kudo", "pk": 8, "fields": { "label": "You Rock", "img": "🎸" } }
+  ]
+  

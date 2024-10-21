@@ -1,0 +1,14 @@
+[
+    { "model": "grandpaapi.workoutexercise", "pk": 1, "fields": { "workout_id": 1, "exercise_id": 4 } },
+    { "model": "grandpaapi.workoutexercise", "pk": 2, "fields": { "workout_id": 1, "exercise_id": 5 } },
+    { "model": "grandpaapi.workoutexercise", "pk": 3, "fields": { "workout_id": 1, "exercise_id": 6 } },
+    
+    { "model": "grandpaapi.workoutexercise", "pk": 4, "fields": { "workout_id": 2, "exercise_id": 10 } },
+    { "model": "grandpaapi.workoutexercise", "pk": 5, "fields": { "workout_id": 2, "exercise_id": 11 } },
+    { "model": "grandpaapi.workoutexercise", "pk": 6, "fields": { "workout_id": 2, "exercise_id": 12 } },
+  
+    { "model": "grandpaapi.workoutexercise", "pk": 7, "fields": { "workout_id": 3, "exercise_id": 13 } },
+    { "model": "grandpaapi.workoutexercise", "pk": 8, "fields": { "workout_id": 3, "exercise_id": 14 } },
+    { "model": "grandpaapi.workoutexercise", "pk": 9, "fields": { "workout_id": 3, "exercise_id": 15 } }
+  ]
+  
