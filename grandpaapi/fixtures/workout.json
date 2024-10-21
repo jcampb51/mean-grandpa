@@ -1,0 +1,6 @@
+[
+    { "model": "grandpaapi.workout", "pk": 1, "fields": { "date_created": "2024-10-01T12:00:00Z", "target_date": "2024-10-15", "user_id": 1, "completed": false, "featured": true } },
+    { "model": "grandpaapi.workout", "pk": 2, "fields": { "date_created": "2024-10-02T12:00:00Z", "target_date": "2024-10-16", "user_id": 2, "completed": false, "featured": false } },
+    { "model": "grandpaapi.workout", "pk": 3, "fields": { "date_created": "2024-10-03T12:00:00Z", "target_date": "2024-10-17", "user_id": 3, "completed": false, "featured": false } }
+  ]
+  

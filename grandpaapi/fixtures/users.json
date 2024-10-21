@@ -1,0 +1,51 @@
+[
+    {
+      "model": "auth.user",
+      "pk": 1,
+      "fields": {
+        "password": "dave8*",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "Dave",
+        "first_name": "Dave",
+        "last_name": "Bauder",
+        "email": "dave@davebauder.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-10-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 2,
+      "fields": {
+        "password": "james8*",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "James",
+        "first_name": "James",
+        "last_name": "Campbell",
+        "email": "james@jamescampbell.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-10-01T12:00:00Z"
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 3,
+      "fields": {
+        "password": "steve8*",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Steve",
+        "first_name": "Steve",
+        "last_name": "Brownlee",
+        "email": "steve@stevebrownlee.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-10-01T12:00:00Z"
+      }
+    }
+  ]
+  
