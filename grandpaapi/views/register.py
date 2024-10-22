@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from bangazonapi.models import Customer
 
 
 @csrf_exempt
@@ -62,15 +61,6 @@ def register_user(request):
         first_name=req_body['first_name'],
         last_name=req_body['last_name']
     )
-
-    customer = Customer.objects.create(
-        phone_number=req_body['phone_number'],
-        address=req_body['address'],
-        user=new_user
-    )
-
-    # Commit the user to the database by saving it
-    customer.save()
 
     # Use the REST Framework's token generator on the new user account
     token = Token.objects.create(user=new_user)
