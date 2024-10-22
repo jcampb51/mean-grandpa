@@ -7,6 +7,10 @@ from grandpaapi.views import *
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r"users", Users, "user")
+router.register(r"workouts", Workouts, "workout")
+router.register(r"exercises", Exercises, "exercise")
+router.register(r"logs", Logs, "log")
+router.register(r"categories", Categories, "category")
 
 urlpatterns = [
     path('', include(router.urls)),
