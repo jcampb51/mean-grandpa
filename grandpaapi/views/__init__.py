@@ -5,3 +5,4 @@ from .category import Categories
 from .log import Logs
 from .workout import Workouts
 from .exercise import Exercises
+from .exercise_category import ExerciseCategories

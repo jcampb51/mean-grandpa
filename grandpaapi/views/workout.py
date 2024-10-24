@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import serializers, status
 from django.http import HttpResponseForbidden
 from django.db import transaction
+from django.utils import timezone
 from grandpaapi.models import Workout, WorkoutExercise, WorkoutCategory, Exercise, Category, Log
 
 
@@ -83,6 +84,31 @@ class Workouts(ViewSet):
             return Response(serializer.data)
         except Workout.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    def get_next_scheduled_workout(self, request):
+        # Get the next scheduled workout for the user where 'completed' is False and order by 'target_date'
+        try:
+            workout = Workout.objects.filter(user=request.user, completed=False, target_date__gte=timezone.now())\
+                                     .order_by('target_date').first()
+            if not workout:
+                return Response({"message": "No upcoming workouts scheduled."}, status=status.HTTP_404_NOT_FOUND)
+
+            serializer = WorkoutSerializer(workout, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return Response({"error": str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def get_workout_logs(self, request, pk=None):
+        # Get logs for the specific workout
+        try:
+            workout = Workout.objects.get(pk=pk, user=request.user)
+            logs = Log.objects.filter(workout=workout)
+            serializer = LogSerializer(logs, many=True, context={'request': request})
+            return Response(serializer.data)
+        except Workout.DoesNotExist:
+            return Response({"error": "Workout not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as ex:
+            return Response({"error": str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @transaction.atomic  # Ensure atomicity, so either all or nothing is committed
     def create(self, request):
