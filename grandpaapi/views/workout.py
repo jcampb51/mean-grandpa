@@ -65,11 +65,16 @@ class Workouts(ViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
-        # List workouts for current user or all if staff
-        if request.user.is_staff:
-            workouts = Workout.objects.all()
-        else:
-            workouts = Workout.objects.filter(user=request.user)
+        # Filter workouts by user (or all if staff) and completion status
+        workouts = Workout.objects.all() if request.user.is_staff else Workout.objects.filter(user=request.user)
+
+        # Check for 'completed' query parameter and filter accordingly
+        completed_filter = request.query_params.get('completed')
+        if completed_filter is not None:
+            if completed_filter.lower() == 'false':
+                workouts = workouts.filter(completed=False)
+            elif completed_filter.lower() == 'true':
+                workouts = workouts.filter(completed=True)
 
         serializer = WorkoutSerializer(workouts, many=True, context={'request': request})
         return Response(serializer.data)
@@ -158,48 +163,60 @@ class Workouts(ViewSet):
             # Parse data
             target_date = request.data.get('target_date')
             category_id = request.data.get('category')
-            exercise_ids = request.data.get('exercises')
+            exercise_ids = request.data.get('exercises', [])  # Default to an empty list if not provided
+            completed = request.data.get('completed')  # Retrieve the completed field from request data
 
-            # Ensure category and exercises exist
-            try:
-                category = Category.objects.get(pk=category_id)
+            # Update the `completed` field if provided
+            if completed is not None:
+                workout.completed = completed
+
+            # Update target_date if provided
+            if target_date:
+                workout.target_date = target_date
+
+            # Ensure category exists if provided
+            if category_id:
+                try:
+                    category = Category.objects.get(pk=category_id)
+                    WorkoutCategory.objects.filter(workout=workout).delete()  # Remove existing category
+                    WorkoutCategory.objects.create(workout=workout, category=category)  # Add new category
+                except Category.DoesNotExist:
+                    return Response({"error": "Category does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Only update exercises if exercise_ids is provided and is not empty
+            if exercise_ids:
                 exercises = Exercise.objects.filter(id__in=exercise_ids)
                 if len(exercises) != len(exercise_ids):
                     return Response({"error": "One or more exercises do not exist."}, status=status.HTTP_400_BAD_REQUEST)
-            except Category.DoesNotExist:
-                return Response({"error": "Category does not exist."}, status=status.HTTP_400_BAD_REQUEST)
 
-            # Update workout fields
-            workout.target_date = target_date
+                # Update workout exercises and logs
+                existing_exercise_ids = WorkoutExercise.objects.filter(workout=workout).values_list('exercise_id', flat=True)
+
+                # Remove old workout exercises and logs not in the new list
+                WorkoutExercise.objects.filter(workout=workout).exclude(exercise_id__in=exercise_ids).delete()
+                
+                # Remove logs for exercises no longer part of the workout
+                Log.objects.filter(workout=workout).exclude(exercise_id__in=exercise_ids).delete()
+
+                # Add new workout exercises and logs if they don't already exist
+                for exercise in exercises:
+                    if exercise.id not in existing_exercise_ids:
+                        # Create WorkoutExercise entry
+                        WorkoutExercise.objects.create(workout=workout, exercise=exercise)
+                        # Create an empty Log entry for the new exercise
+                        Log.objects.create(user=request.user, exercise=exercise, workout=workout, weight=0, reps=0, sets=0, interval=0)
+
+            # Save changes to the workout
             workout.save()
-
-            # Update workout category
-            WorkoutCategory.objects.filter(workout=workout).delete()  # Remove existing category
-            WorkoutCategory.objects.create(workout=workout, category=category)  # Add new category
-
-            # Update workout exercises and logs
-            existing_exercise_ids = WorkoutExercise.objects.filter(workout=workout).values_list('exercise_id', flat=True)
-
-            # Remove old workout exercises and logs not in the new list
-            WorkoutExercise.objects.filter(workout=workout).exclude(exercise_id__in=exercise_ids).delete()
-            
-            # Remove logs for exercises no longer part of the workout
-            Log.objects.filter(workout=workout).exclude(exercise_id__in=exercise_ids).delete()
-
-            # Add new workout exercises and logs if they don't already exist
-            for exercise in exercises:
-                if exercise.id not in existing_exercise_ids:
-                    # Create WorkoutExercise entry
-                    WorkoutExercise.objects.create(workout=workout, exercise=exercise)
-                    # Create an empty Log entry for the new exercise
-                    Log.objects.create(user=request.user, exercise=exercise, workout=workout, weight=0, reps=0, sets=0, interval=0)
 
             # Serialize the updated workout
             serializer = WorkoutSerializer(workout, context={'request': request})
             return Response(serializer.data)
-    
+        
         except Workout.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
 
 
     def destroy(self, request, pk=None):

@@ -11,13 +11,15 @@ class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
         fields = ['id', 'name', 'description', 'video_link']
+        read_only_fields = ['id', 'name', 'description', 'video_link']
 
 class LogSerializer(serializers.ModelSerializer):
-    exercise = ExerciseSerializer()
+    exercise = ExerciseSerializer(read_only=True)  # Make exercise field read-only
 
     class Meta:
         model = Log
         fields = ['id', 'weight', 'reps', 'sets', 'interval', 'exercise']
+        read_only_fields = ['id', 'exercise']
 
 # ViewSet
 class Logs(ViewSet):
@@ -44,12 +46,14 @@ class Logs(ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
+        # Fetch the specific log to update
         try:
             log = Log.objects.get(pk=pk, user=request.user)
             serializer = LogSerializer(log, data=request.data, partial=True, context={'request': request})
+
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Log.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
