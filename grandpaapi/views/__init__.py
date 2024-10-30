@@ -3,6 +3,7 @@ from .register import register_user
 from .register import login_user
 from .category import Categories
 from .log import Logs
-from .workout import Workouts
+from .workout import Workouts, WorkoutSerializer
 from .exercise import Exercises
 from .exercise_category import ExerciseCategories
+from .featured_workouts import FeaturedWorkouts

@@ -2,6 +2,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
 from rest_framework import serializers, status
 from django.http import HttpResponseForbidden
 from django.db import transaction
@@ -121,6 +122,7 @@ class Workouts(ViewSet):
         target_date = request.data.get('target_date')
         category_id = request.data.get('category')
         exercise_ids = request.data.get('exercises')
+        featured = request.data.get('featured', False)  # Check if workout is to be featured
 
         # Ensure category and exercises exist
         try:
@@ -131,12 +133,12 @@ class Workouts(ViewSet):
         except Category.DoesNotExist:
             return Response({"error": "Category does not exist."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create workout
+        # Create workout with featured value based on the request
         workout = Workout.objects.create(
             user=request.user,
             target_date=target_date,
             completed=False,  # Initially not completed
-            featured=False    # Set to False unless otherwise specified
+            featured=featured  # Set featured value from request data
         )
 
         # Create workout category
@@ -234,3 +236,48 @@ class Workouts(ViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Workout.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        
+    @transaction.atomic
+    @action(detail=True, methods=['post'])
+    def copy_workout(self, request, pk=None):
+        """Handles creating a copy of a workout"""
+        try:
+            original_workout = Workout.objects.get(pk=pk)
+
+            # Create a copy of the workout
+            new_workout = Workout.objects.create(
+                user=request.user,  # Assign the workout to the requesting user
+                target_date=original_workout.target_date,
+                completed=False,
+                featured=False  # Set to False by default for copied workouts
+            )
+
+            # Copy workout category
+            original_category = WorkoutCategory.objects.filter(workout=original_workout).first()
+            if original_category:
+                WorkoutCategory.objects.create(workout=new_workout, category=original_category.category)
+
+            # Copy exercises and create corresponding logs
+            original_exercises = WorkoutExercise.objects.filter(workout=original_workout)
+            for workout_exercise in original_exercises:
+                # Create new WorkoutExercise entry
+                new_workout_exercise = WorkoutExercise.objects.create(
+                    workout=new_workout,
+                    exercise=workout_exercise.exercise
+                )
+                # Create a log entry for each exercise
+                Log.objects.create(
+                    user=request.user,
+                    workout=new_workout,
+                    exercise=workout_exercise.exercise,
+                    weight=0, reps=0, sets=0, interval=0
+                )
+
+            # Serialize the newly copied workout
+            serializer = WorkoutSerializer(new_workout, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        except Workout.DoesNotExist:
+            return Response({"error": "Workout not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as ex:
+            return Response({"error": str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
